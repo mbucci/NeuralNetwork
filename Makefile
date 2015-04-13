@@ -7,7 +7,9 @@ JC = javac
 CLASSES = \
 	NeuralNetwork.java\
 	NNRunner.java\
-	Problem.java      
+	Perceptron.java\
+	Problem.java\
+	Clause.java      
 
  
 default: classes
