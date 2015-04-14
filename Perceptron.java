@@ -17,6 +17,8 @@ public class Perceptron
    private static final int WEIGHT_OFFSET = 1;
     
    private static Map<Integer, List<Edge>> inputs;
+   
+   private static int timesTrained;
 
     /**
      * Constructor. The map's key is the ID of the input node, the value is the 
@@ -27,6 +29,7 @@ public class Perceptron
         
         if (this.inputs != null) return;
         this.inputs = new HashMap<Integer, List<Edge>>();
+        this.timesTrained = 0;
         
         for (int i = 0; i < numInput; i++) {
             
@@ -41,6 +44,9 @@ public class Perceptron
         }
     }
     
+    public void perceptronTrained() { this.timesTrained++; }
+    
+    public int getTimesTrained() { return this.timesTrained; }
     
     public double getWeightedInput(int inID, int outID, double inVal) {
         return getWeight(inID, outID) * inVal;
@@ -53,13 +59,5 @@ public class Perceptron
     
     public void setWeight(int inID, int outID, double newWeight) {
         this.inputs.get(inID).get(outID).setWeight(newWeight);
-    }
-    
-    public void printWeights() {
-        for (Map.Entry<Integer, List<Edge>> edgePair : this.inputs.entrySet()) {
-            for (Edge e : edgePair.getValue()) {
-                System.out.println(e.getWeight());
-            }
-        }
     }
 }

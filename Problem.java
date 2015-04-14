@@ -18,16 +18,23 @@ public class Problem
     private static final int ANSWER_LINE_LEN = 2;
     
     private int problemType;
+    private String fileType;
     private int numProblems;
     private List<Clause> problem;
     
+    
+    /**
+     * Constructor
+     */
     public Problem(File f) {
         
         this.problem = new ArrayList<Clause>();
         this.numProblems = 0;
         this.problemType = (f.getName().contains("8x8")) ? 8 : 32;
+        this.fileType = (f.getName().contains("tra")) ? "Training" : "Testing";
         readFile(f);
     }
+    
     
     public void readFile(File f) {
         
@@ -74,7 +81,9 @@ public class Problem
         }
     }
     
+    
     public int getProblemType() { return this.problemType; }
+    public String getFileType() { return this.fileType; }
     public int getNumProblems() { return this.numProblems; }
     public ListIterator<Clause> getIterator() { return this.problem.listIterator(); }
 }

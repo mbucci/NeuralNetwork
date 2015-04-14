@@ -20,6 +20,7 @@ public class Edge
         this.weight = weight;
     }
     
+    
     public int getInput() { return this.inputNode; }
     public int getOutput() { return this.outputNode; }
     public double getWeight() { return this.weight; }
