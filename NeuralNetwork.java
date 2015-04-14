@@ -27,7 +27,10 @@ public class NeuralNetwork
     
     public static void main (String[] args) {
         
-        assert(args.length == 5);
+        if (args.length != 5) {
+            System.out.println("Bad Input: Wrong number of arguments");
+            System.exit(0);
+        }
         
         outputNodes = Integer.parseInt(args[0]);
         epochs = Integer.parseInt(args[1]);
@@ -35,7 +38,10 @@ public class NeuralNetwork
         trainFile = new File(args[3]);
         testFile = new File(args[4]);
         
-        assert(outputNodes == 1 || outputNodes == 10);
+        if (outputNodes != 1 && outputNodes != 10) {
+            System.out.println("Bad Input: " + outputNodes + ". Value must be 1 or 10");
+            System.exit(1);
+        }
         
         NNRunner runner = new NNRunner(outputNodes, epochs, learningRate);
         trainProb = new Problem(trainFile);

@@ -37,31 +37,41 @@ public class NNRunner
         
         if (prob.getProblemType() > 0) this.inputNodes = (int) Math.pow(prob.getProblemType(), 2); 
         perceptron = new Perceptron(this.inputNodes, this.outputNodes);
-
+        perceptron.printWeights();
+        System.out.println("-------------------------------");
+        
         int epochsCount = 0;
         do {
             ListIterator<Clause> lit = prob.getIterator();
             while (lit.hasNext()) {
-                int[] target = new int[this.outputNodes];
+                double[] target = new double[this.outputNodes];
                 double[] output = new double[this.outputNodes];
                 
                 Clause temp = lit.next();
-                if (this.outputNodes == 1) target[0] = temp.getAnswer();
+                if (this.outputNodes == 1) target[0] = temp.getAnswer() / 10.0;
                 else if (this.outputNodes == 10) target[temp.getAnswer()] = 1;
                 
-                for (int o = 0; o < this.outputNodes; o++) {
-                    double outputValue = 0.0;
-                    int i = 0;
+                for (int oID = 0; oID < this.outputNodes; oID++) {
+                    double weightedInputs = 0.0;
+                    int iID = 0;
                     
                     for (Integer val : temp.getData()) {
-                        outputValue += perceptron.getWeightedInput(i, o, val);
-                        System.out.println(outputValue);
-                        i++;
+                        weightedInputs += perceptron.getWeightedInput(iID, oID, val);
+                        iID++;
                     }
                     
-                    output[o] = outputValue;
-                    double error = calculateError(o, calculateActivation(outputValue), target);
-                    System.out.println(error);
+                    output[oID] = calculateActivation(weightedInputs);
+                    double error = calculateError(oID, output[oID], target);
+                    double activationForWeighted = calculateActivation(weightedInputs);
+                    double activateDerive = activationForWeighted * (1-activationForWeighted);
+                    
+                    iID = 0;
+                    for (Integer val : temp.getData()) {
+                        double weightUpdate = this.learningRate * val * error * activateDerive;
+                        double newWeight = perceptron.getWeight(iID, oID) + weightUpdate;
+                        perceptron.setWeight(iID, oID, newWeight);
+                        iID++;
+                    }
                 }
             }
             epochsCount++;
@@ -77,8 +87,8 @@ public class NNRunner
     }
     
     
-    private double calculateError(int outID, double outVal, int[] target) {
-        
+    private double calculateError(int outID, double outVal, double[] target) {
+
         double ret = 0.0;
         if (target.length == 1) ret = target[0] - outVal;
         else ret = target[outID] - outVal;

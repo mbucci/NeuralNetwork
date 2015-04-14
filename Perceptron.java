@@ -43,13 +43,23 @@ public class Perceptron
     
     
     public double getWeightedInput(int inID, int outID, double inVal) {
-        
-        Edge temp = this.inputs.get(inID).get(outID);
-        return temp.getWeight() * inVal; 
+        return getWeight(inID, outID) * inVal;
     }
     
+    public double getWeight(int inID, int outID) {
+        Edge temp = this.inputs.get(inID).get(outID);;
+        return temp.getWeight();
+    }
     
     public void setWeight(int inID, int outID, double newWeight) {
         this.inputs.get(inID).get(outID).setWeight(newWeight);
+    }
+    
+    public void printWeights() {
+        for (Map.Entry<Integer, List<Edge>> edgePair : this.inputs.entrySet()) {
+            for (Edge e : edgePair.getValue()) {
+                System.out.println(e.getWeight());
+            }
+        }
     }
 }
