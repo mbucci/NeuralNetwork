@@ -21,25 +21,23 @@ public class NeuralNetwork
     private static File trainFile;
     private static File testFile;
     
-    private static int inputNodes;
     private static int outputNodes;
     private static int epochs;
     private static double learningRate;
     
     public static void main (String[] args) {
         
-        assert(args.length == 6);
+        assert(args.length == 5);
         
-        inputNodes = Integer.parseInt(args[0]);
-        outputNodes = Integer.parseInt(args[1]);
-        epochs = Integer.parseInt(args[2]);
-        learningRate = Double.parseDouble(args[3]);
-        trainFile = new File(args[4]);
-        testFile = new File(args[5]);
+        outputNodes = Integer.parseInt(args[0]);
+        epochs = Integer.parseInt(args[1]);
+        learningRate = Double.parseDouble(args[2]);
+        trainFile = new File(args[3]);
+        testFile = new File(args[4]);
         
         assert(outputNodes == 1 || outputNodes == 10);
         
-        NNRunner runner = new NNRunner(inputNodes, outputNodes, epochs, learningRate);
+        NNRunner runner = new NNRunner(outputNodes, epochs, learningRate);
         trainProb = new Problem(trainFile);
         testProb = new Problem(testFile);
         

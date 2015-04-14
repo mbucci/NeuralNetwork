@@ -18,12 +18,14 @@ public class Problem
     private static final int ANSWER_LINE_LEN = 2;
     
     private int problemType;
+    private int numProblems;
     private List<Clause> problem;
     
     public Problem(File f) {
         
         this.problem = new ArrayList<Clause>();
-        this.problemType = (f.getName().contains("8x8")) ? 0 : 1;
+        this.numProblems = 0;
+        this.problemType = (f.getName().contains("8x8")) ? 8 : 32;
         readFile(f);
     }
     
@@ -39,7 +41,7 @@ public class Problem
                 //Ignore any alpha lines
                 if (Pattern.matches(pattern, line)) continue; 
                 
-                if (this.problemType == 1) {
+                if (this.problemType == 32) {
                     if (line.length() > ANSWER_LINE_LEN) {
                         StringTokenizer tokens = new StringTokenizer(line, "01", true);
                         while (tokens.hasMoreTokens()) data.add(Integer.parseInt(tokens.nextToken()));
@@ -49,16 +51,18 @@ public class Problem
                         Clause newClause = new Clause(Integer.parseInt(answer), (List) data.clone());
 
                         this.problem.add(newClause);
+                        this.numProblems++;
                         data.clear();
                     }
                     
-                } else {
+                } else if (this.problemType == 8) {
                     StringTokenizer tokens = new StringTokenizer(line.substring(0,line.length()-2), ",");
                     String answer = line.substring(line.length()-1, line.length());
                     while (tokens.hasMoreTokens()) data.add(Integer.parseInt(tokens.nextToken()));
                     
                     Clause newClause = new Clause(Integer.parseInt(answer), (List) data.clone());
                     this.problem.add(newClause);
+                    this.numProblems++;
                     data.clear();
                 }
             }
@@ -69,4 +73,8 @@ public class Problem
             e.printStackTrace();
         }
     }
+    
+    public int getProblemType() { return this.problemType; }
+    public int getNumProblems() { return this.numProblems; }
+    public ListIterator<Clause> getIterator() { return this.problem.listIterator(); }
 }
