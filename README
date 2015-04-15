@@ -11,7 +11,13 @@ To Run:
 Output:
   
   File information
-  Paramter information
+  Parameter information
   Percent correct per epoch
-    
-      "Epoch: # -> Percent Correct: %"
+      
+      "Started [file type] Size: [size]
+      Input Nodes: #
+      Output Nodes: #
+      Learning Rate: #
+      Epochs: #
+      -------------------------------------
+      Epoch: # -> Percent Correct: %"
