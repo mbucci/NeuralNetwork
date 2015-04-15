@@ -8,8 +8,9 @@ CLASSES = \
 	NeuralNetwork.java\
 	NNRunner.java\
 	Perceptron.java\
+	Edge.java\
 	Problem.java\
-	Clause.java      
+	Clause.java
 
  
 default: classes
