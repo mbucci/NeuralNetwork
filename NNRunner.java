@@ -40,7 +40,9 @@ public class NNRunner
     public double run(Problem prob) {
         
         if (prob.getProblemType() > 0) this.inputNodes = (int) Math.pow(prob.getProblemType(), 2); 
+        if (prob.getFileType().equals("Testing")) this.epochs = 1;
         perceptron = new Perceptron(this.inputNodes, this.outputNodes);
+        
         System.out.println("\nStarted " + prob.getFileType() + " File. Size: " + prob.getProblemType());
         System.out.println("Input Nodes: " + this.inputNodes);
         System.out.println("Output Nodes: " + this.outputNodes);
@@ -57,7 +59,7 @@ public class NNRunner
                 double[] output = new double[this.outputNodes];
                 
                 Clause temp = lit.next();
-                if (this.outputNodes == 1) target[0] = temp.getAnswer() / 10.0;
+                if (this.outputNodes == 1) target[0] = temp.getAnswer();
                 else if (this.outputNodes == 10) target[temp.getAnswer()] = 1;
                 
                 for (int oID = 0; oID < this.outputNodes; oID++) {
@@ -103,7 +105,7 @@ public class NNRunner
     private double calculateError(int outID, double outVal, double[] target) {
 
         double ret = 0.0;
-        if (target.length == 1) ret = target[0] - outVal;
+        if (target.length == 1) ret = target[0] - (10 * outVal);
         else ret = target[outID] - outVal;
         return ret;
     }
@@ -113,7 +115,7 @@ public class NNRunner
         
         if (target.length == 1) {
             int value = (int) (10 * output[0]);
-            if ((int)(10 * target[0]) == value) this.numCorrect++;
+            if ((int)(target[0]) == value) this.numCorrect++;
             
         } else {
             double currHigh = 0.0;

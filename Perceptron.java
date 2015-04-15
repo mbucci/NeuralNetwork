@@ -19,6 +19,7 @@ public class Perceptron
    private static Map<Integer, List<Edge>> inputs;
    
    private static int timesTrained;
+   private static int biasNodeID;
 
     /**
      * Constructor. The map's key is the ID of the input node, the value is the 
@@ -30,6 +31,7 @@ public class Perceptron
         if (this.inputs != null) return;
         this.inputs = new HashMap<Integer, List<Edge>>();
         this.timesTrained = 0;
+        this.biasNodeID = rand.nextInt(numInput);
         
         for (int i = 0; i < numInput; i++) {
             
@@ -49,6 +51,7 @@ public class Perceptron
     public int getTimesTrained() { return this.timesTrained; }
     
     public double getWeightedInput(int inID, int outID, double inVal) {
+        if (inID == this.biasNodeID) return Double.MAX_VALUE;
         return getWeight(inID, outID) * inVal;
     }
     
