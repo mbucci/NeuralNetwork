@@ -110,10 +110,10 @@ public class NNRunner
     
         
     public void calculateResults(double[] output, double[] target) {
-       
+        
         if (target.length == 1) {
             int value = (int) (10 * output[0]);
-            if ((int)target[0] == value) this.numCorrect++;
+            if ((int)(10 * target[0]) == value) this.numCorrect++;
             
         } else {
             double currHigh = 0.0;
