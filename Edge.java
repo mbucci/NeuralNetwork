@@ -12,7 +12,8 @@ public class Edge
     private double weight;
 
     /**
-     * Constructor for objects of class Edge
+     * Constructor for objects of class Edge. Keeps track of input node ID, 
+     * output node ID and the weight of the edge between them.
      */
     public Edge(int in, int out, double weight) {
         this.inputNode = in;

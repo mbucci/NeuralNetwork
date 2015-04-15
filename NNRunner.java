@@ -10,8 +10,11 @@
 import java.util.*;
 
 public class NNRunner
-{    
-    private static final double SIGMOID_CONSTANT = 0.5;
+{   
+    //Perceptron constants
+    private static final double SIGMOID_CONSTANT = 0.0;
+    private static final double WEIGHT_HIGH = 0.3;
+    private static final double WEIGHT_OFFSET = WEIGHT_HIGH / 2.0;
     
     //Instance of the perceptron network
     private static Perceptron perceptron;
@@ -37,11 +40,13 @@ public class NNRunner
     }
     
     
-    public double run(Problem prob) {
+    //Main function for NN. Runs perceptron NN on a given problem
+    public void run(Problem prob) {
         
         if (prob.getProblemType() > 0) this.inputNodes = (int) Math.pow(prob.getProblemType(), 2); 
         if (prob.getFileType().equals("Testing")) this.epochs = 1;
-        perceptron = new Perceptron(this.inputNodes, this.outputNodes);
+        
+        perceptron = new Perceptron(this.inputNodes, this.outputNodes, WEIGHT_HIGH, WEIGHT_OFFSET);
         
         System.out.println("\nStarted " + prob.getFileType() + " File. Size: " + prob.getProblemType());
         System.out.println("Input Nodes: " + this.inputNodes);
@@ -63,6 +68,8 @@ public class NNRunner
                 else if (this.outputNodes == 10) target[temp.getAnswer()] = 1;
                 
                 for (int oID = 0; oID < this.outputNodes; oID++) {
+                    
+                    //**********Calculate sum of weighted inputs**********//
                     double weightedInputs = 0.0;
                     int iID = 0;
                     for (Integer val : temp.getData()) {
@@ -70,11 +77,12 @@ public class NNRunner
                         iID++;
                     }
                     
+                    //********Calculate error and activation value*********//
                     output[oID] = calculateActivation(weightedInputs);
                     double error = calculateError(oID, output[oID], target);
-                    double activationForWeighted = calculateActivation(weightedInputs);
-                    double activateDerive = activationForWeighted * (1-activationForWeighted);
+                    double activateDerive = output[oID] * (1 - output[oID]);
                     
+                    //******************Weight Update*********************//
                     iID = 0;
                     for (Integer val : temp.getData()) {
                         double weightUpdate = this.learningRate * val * error * activateDerive;
@@ -89,30 +97,30 @@ public class NNRunner
             epochsCount++;
             printResults(epochsCount, prob);
         } while (epochsCount < epochs);
-        
-        return this.numCorrect;
+        System.out.println();
     }
     
     
     // Calculates activation function for inputs. Derivative is g(in) * (1 - g(in))
     private double calculateActivation(double input) {
-        
         double denominator = 1 + Math.exp(SIGMOID_CONSTANT - input);
         return 1.0 / denominator;
     }
     
     
+    //Calculate error for a given output node, output value and target value.
     private double calculateError(int outID, double outVal, double[] target) {
-
         double ret = 0.0;
-        if (target.length == 1) ret = target[0] - (10 * outVal);
+        if (target.length == 1) ret = (target[0] / 10) - outVal;
         else ret = target[outID] - outVal;
         return ret;
     }
     
-        
+    
+    //Calculate the results of a given problem clause. Keeps track of total correctly 
+    //estimated clauses. 
     public void calculateResults(double[] output, double[] target) {
-        
+
         if (target.length == 1) {
             int value = (int) (10 * output[0]);
             if ((int)(target[0]) == value) this.numCorrect++;
@@ -131,6 +139,7 @@ public class NNRunner
     }
     
     
+    //Prints results at the end of an epoch. 
     public void printResults(int epoch, Problem prob) {
          double percentCorrect = 100 * (double)this.numCorrect / (double)prob.getNumProblems();
          System.out.println(String.format("Epoch: " + epoch + " -> Percent Correct: %.1f%%", percentCorrect));

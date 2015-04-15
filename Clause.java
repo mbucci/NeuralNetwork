@@ -1,4 +1,3 @@
-
 /**
  * Clause class for a Problem File
  * 
@@ -12,8 +11,8 @@ import java.util.*;
 
 public class Clause
 {
-    private int answer;
-    private List<Integer> data;
+    private int answer;            //The clauses answer
+    private List<Integer> data;    //The clause data
 
     /**
      * Constructor for objects of class Clause

@@ -1,4 +1,3 @@
-
 /**
  * Sets up a NN problem
  * 
@@ -11,20 +10,21 @@
 import java.util.*;
 import java.util.regex.*;
 import java.io.*;
+
 @SuppressWarnings("unchecked")
 
 public class Problem
 {
     private static final int ANSWER_LINE_LEN = 2;
     
-    private int problemType;
-    private String fileType;
-    private int numProblems;
-    private List<Clause> problem;
+    private int problemType;         //32 (32x32) or 8 (8x8)
+    private String fileType;         //Testing or Training
+    private int numProblems;         //number of problem clauses
+    private List<Clause> problem;    //Problem data structure
     
     
     /**
-     * Constructor
+     * Constructor, handles reading a file and problem construction 
      */
     public Problem(File f) {
         
@@ -36,6 +36,7 @@ public class Problem
     }
     
     
+    //Reads in either 32x32 or 8x8 problem files.
     public void readFile(File f) {
         
         try {

@@ -1,4 +1,3 @@
-
 /**
  * Runs a basic Perceptron Neural Network
  * 
@@ -25,6 +24,9 @@ public class NeuralNetwork
     private static int epochs;
     private static double learningRate;
     
+    /**
+     * Main Function
+     */
     public static void main (String[] args) {
         
         if (args.length != 5) {
