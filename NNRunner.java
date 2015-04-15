@@ -15,6 +15,7 @@ public class NNRunner
     private static final double SIGMOID_CONSTANT = 0.0;
     private static final double WEIGHT_HIGH = 0.3;
     private static final double WEIGHT_OFFSET = WEIGHT_HIGH / 2.0;
+    private static final int PRINT_INTERVAL = 5;
     
     //Instance of the perceptron network
     private static Perceptron perceptron;
@@ -95,7 +96,7 @@ public class NNRunner
                 perceptron.perceptronTrained();
             }
             epochsCount++;
-            printResults(epochsCount, prob);
+            if (epochsCount%PRINT_INTERVAL == 0 || epochsCount == 1) printResults(epochsCount, prob);
         } while (epochsCount < epochs);
         System.out.println();
     }
