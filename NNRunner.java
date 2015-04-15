@@ -49,7 +49,9 @@ public class NNRunner
         
         perceptron = new Perceptron(this.inputNodes, this.outputNodes, WEIGHT_HIGH, WEIGHT_OFFSET);
         
-        System.out.println("\nStarted " + prob.getFileType() + " File. Size: " + prob.getProblemType());
+        System.out.println("\nStarted " + prob.getFileType() + " File of Size: " + prob.getProblemType());
+        System.out.println("Weight Range: [" + (WEIGHT_HIGH-WEIGHT_OFFSET) + "," + (-WEIGHT_OFFSET) + "]");
+        System.out.println("Sigmoid Constant: " + SIGMOID_CONSTANT);
         System.out.println("Input Nodes: " + this.inputNodes);
         System.out.println("Output Nodes: " + this.outputNodes);
         System.out.println("Learning Rate: " + this.learningRate);
@@ -98,7 +100,7 @@ public class NNRunner
             epochsCount++;
             if (epochsCount%PRINT_INTERVAL == 0 || epochsCount == 1) printResults(epochsCount, prob);
         } while (epochsCount < epochs);
-        System.out.println();
+        System.out.println("-----------------------------------------");
     }
     
     
