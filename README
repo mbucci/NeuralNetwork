@@ -14,10 +14,14 @@ Output:
   Parameter information
   Percent correct per epoch
       
-      "Started [file type] Size: [size]
+      "Started [file type] of Size: [size]
+      Weight Range: [#,#]
+      Sigmoid Constant: #
       Input Nodes: #
       Output Nodes: #
       Learning Rate: #
       Epochs: #
       -------------------------------------
       Epoch: # -> Percent Correct: %"
+      ...
+      -------------------------------------
